@@ -542,6 +542,8 @@ textarea {
     });
   });
 
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxH9wfOIamiEn63MHhLT15oUn5tD6ViIdGCOm12VPGlXDSgr5tM0Y9jqjHJNZIvIf-Y/exec';
+
   function handleSubmit() {
     const suite = document.getElementById('suite').value.trim();
     const standout = document.getElementById('standout').value.trim();
@@ -559,8 +561,32 @@ textarea {
       return;
     }
 
-    document.getElementById('formInner').classList.add('hide');
-    document.getElementById('thankyou').classList.add('show');
+    const btn = document.getElementById('submitBtn');
+    btn.style.opacity = '0.6';
+    btn.style.pointerEvents = 'none';
+
+    const payload = {
+      suite: suite,
+      overall: ratings.overall || 'N/A',
+      service: ratings.service || 'N/A',
+      standout: standout,
+      fb: document.getElementById('fb').value.trim() || 'N/A'
+    };
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(() => {
+      document.getElementById('formInner').classList.add('hide');
+      document.getElementById('thankyou').classList.add('show');
+    })
+    .catch(() => {
+      document.getElementById('formInner').classList.add('hide');
+      document.getElementById('thankyou').classList.add('show');
+    });
   }
 </script>
 
