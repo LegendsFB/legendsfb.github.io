@@ -250,8 +250,12 @@ textarea {
   transition: fill 0.15s ease, stroke 0.15s ease, transform 0.15s ease;
 }
 
-.stars:hover .star svg,
 .star.active svg {
+  fill: var(--gold);
+  stroke: var(--gold);
+}
+
+.stars:hover .star svg {
   fill: var(--gold);
   stroke: var(--gold);
 }
@@ -537,7 +541,10 @@ textarea {
     stars.forEach((star, i) => {
       star.addEventListener('click', () => {
         ratings[key] = i + 1;
-        stars.forEach((s, j) => s.classList.toggle('active', j <= i));
+        stars.forEach((s, j) => {
+          s.classList.remove('active');
+          if (j <= i) s.classList.add('active');
+        });
       });
     });
   });
