@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -9,419 +8,416 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-```
-:root {
-  --navy: #0a0f1e;
-  --navy-mid: #111829;
-  --navy-light: #1a2540;
-  --blue: #1d3c78;
-  --blue-light: #2a5298;
-  --gold: #c9a84c;
-  --gold-light: #e8c97a;
-  --gold-pale: #f5e6b8;
-  --white: #f8f5ef;
-  --muted: #8a95a8;
-  --border: rgba(201,168,76,0.2);
-}
+    :root {
+      --navy: #0a0f1e;
+      --navy-mid: #111829;
+      --navy-light: #1a2540;
+      --blue: #1d3c78;
+      --blue-light: #2a5298;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --gold-pale: #f5e6b8;
+      --white: #f8f5ef;
+      --muted: #8a95a8;
+      --border: rgba(201,168,76,0.2);
+    }
 
-html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; }
 
-body {
-  background-color: var(--navy);
-  color: var(--white);
-  font-family: 'Barlow', sans-serif;
-  font-weight: 300;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+    body {
+      background-color: var(--navy);
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-/* Background texture */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(29,60,120,0.35) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 40% at 90% 90%, rgba(201,168,76,0.08) 0%, transparent 60%);
-  pointer-events: none;
-  z-index: 0;
-}
+    /* Background texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(29,60,120,0.35) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 90% 90%, rgba(201,168,76,0.08) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
 
-.page-wrap {
-  position: relative;
-  z-index: 1;
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 60px 24px 80px;
-}
+    .page-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
 
-/* Header */
-.header {
-  text-align: center;
-  margin-bottom: 56px;
-  animation: fadeDown 0.8s ease both;
-}
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 56px;
+      animation: fadeDown 0.8s ease both;
+    }
 
-.logo-mark {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 28px;
-}
+    .logo-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
 
-.logo-line {
-  width: 40px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold));
-}
-.logo-line.right {
-  background: linear-gradient(90deg, var(--gold), transparent);
-}
+    .logo-line {
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+    .logo-line.right {
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
 
-.logo-diamond {
-  width: 8px;
-  height: 8px;
-  background: var(--gold);
-  transform: rotate(45deg);
-}
+    .logo-diamond {
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      transform: rotate(45deg);
+    }
 
-.eyebrow {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 14px;
-}
+    .eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
 
-h1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(36px, 8vw, 52px);
-  font-weight: 300;
-  line-height: 1.1;
-  color: var(--white);
-  margin-bottom: 16px;
-}
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 8vw, 52px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
 
-h1 span {
-  color: var(--gold-light);
-  font-style: italic;
-}
+    h1 span {
+      color: var(--gold-light);
+      font-style: italic;
+    }
 
-.subtitle {
-  font-size: 14px;
-  color: var(--muted);
-  letter-spacing: 0.04em;
-  line-height: 1.7;
-  max-width: 400px;
-  margin: 0 auto;
-}
+    .subtitle {
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      line-height: 1.7;
+      max-width: 400px;
+      margin: 0 auto;
+    }
 
-.divider {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin: 40px 0;
-}
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 40px 0;
+    }
 
-.divider-line {
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-}
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
 
-.divider-dot {
-  width: 4px;
-  height: 4px;
-  background: var(--gold);
-  border-radius: 50%;
-}
+    .divider-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
 
-/* Form */
-.form-card {
-  background: var(--navy-mid);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  padding: 40px 36px;
-  animation: fadeUp 0.8s ease 0.2s both;
-}
+    /* Form */
+    .form-card {
+      background: var(--navy-mid);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 40px 36px;
+      animation: fadeUp 0.8s ease 0.2s both;
+    }
 
-@media (max-width: 480px) {
-  .form-card { padding: 28px 20px; }
-}
+    @media (max-width: 480px) {
+      .form-card { padding: 28px 20px; }
+    }
 
-.field-group {
-  margin-bottom: 32px;
-}
+    .field-group {
+      margin-bottom: 32px;
+    }
 
-.field-label {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
+    .field-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-.required-mark {
-  color: var(--gold-light);
-  font-size: 14px;
-  line-height: 1;
-}
+    .required-mark {
+      color: var(--gold-light);
+      font-size: 14px;
+      line-height: 1;
+    }
 
-input[type="text"],
-textarea {
-  width: 100%;
-  background: var(--navy-light);
-  border: 1px solid rgba(201,168,76,0.15);
-  border-radius: 2px;
-  padding: 14px 16px;
-  color: var(--white);
-  font-family: 'Barlow', sans-serif;
-  font-size: 15px;
-  font-weight: 300;
-  outline: none;
-  transition: border-color 0.25s ease, background 0.25s ease;
-  -webkit-appearance: none;
-}
+    input[type="text"],
+    textarea {
+      width: 100%;
+      background: var(--navy-light);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 2px;
+      padding: 14px 16px;
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.25s ease, background 0.25s ease;
+      -webkit-appearance: none;
+    }
 
-input[type="text"]:focus,
-textarea:focus {
-  border-color: rgba(201,168,76,0.5);
-  background: rgba(26,37,64,0.8);
-}
+    input[type="text"]:focus,
+    textarea:focus {
+      border-color: rgba(201,168,76,0.5);
+      background: rgba(26,37,64,0.8);
+    }
 
-input[type="text"]::placeholder,
-textarea::placeholder {
-  color: rgba(138,149,168,0.5);
-  font-style: italic;
-}
+    input[type="text"]::placeholder,
+    textarea::placeholder {
+      color: rgba(138,149,168,0.5);
+      font-style: italic;
+    }
 
-textarea {
-  resize: vertical;
-  min-height: 90px;
-  line-height: 1.6;
-}
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+      line-height: 1.6;
+    }
 
-/* Star rating */
-.rating-group {
-  margin-bottom: 32px;
-}
+    /* Star rating */
+    .rating-group {
+      margin-bottom: 32px;
+    }
 
-.rating-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
+    .rating-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
 
-.rating-label-text {
-  font-size: 14px;
-  color: var(--white);
-  font-weight: 400;
-  min-width: 140px;
-}
+    .rating-label-text {
+      font-size: 14px;
+      color: var(--white);
+      font-weight: 400;
+      min-width: 140px;
+    }
 
-.stars {
-  display: flex;
-  gap: 6px;
-}
+    .stars {
+      display: flex;
+      gap: 6px;
+    }
 
-.star {
-  width: 36px;
-  height: 36px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
+    .star {
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
 
-.star svg {
-  width: 28px;
-  height: 28px;
-  fill: var(--navy-light);
-  stroke: rgba(201,168,76,0.3);
-  stroke-width: 1.5;
-  transition: fill 0.15s ease, stroke 0.15s ease, transform 0.15s ease;
-}
+    .star svg {
+      width: 28px;
+      height: 28px;
+      fill: var(--navy-light);
+      stroke: rgba(201,168,76,0.3);
+      stroke-width: 1.5;
+      transition: fill 0.15s ease, stroke 0.15s ease, transform 0.15s ease;
+    }
 
-.star.active svg {
-  fill: var(--gold);
-  stroke: var(--gold);
-}
+    .star.active svg {
+      fill: var(--gold) !important;
+      stroke: var(--gold) !important;
+    }
 
-.stars:hover .star svg {
-  fill: var(--gold);
-  stroke: var(--gold);
-}
+    @media (hover: hover) {
+      .stars:hover .star svg {
+        fill: var(--gold);
+        stroke: var(--gold);
+      }
+      .stars .star:hover ~ .star svg {
+        fill: var(--navy-light);
+        stroke: rgba(201,168,76,0.3);
+      }
+      .star:hover svg {
+        transform: scale(1.15);
+      }
+    }
 
-.stars .star:hover ~ .star svg {
-  fill: var(--navy-light);
-  stroke: rgba(201,168,76,0.3);
-}
+    /* Two-col ratings */
+    .ratings-block {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
 
-.star:hover svg {
-  transform: scale(1.15);
-}
+    .rating-item {
+      padding: 16px 20px;
+      background: var(--navy-light);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
 
-/* Two-col ratings */
-.ratings-block {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-bottom: 32px;
-}
+    .rating-item-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
 
-.rating-item {
-  padding: 16px 20px;
-  background: var(--navy-light);
-  border: 1px solid rgba(201,168,76,0.1);
-  border-radius: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-}
+    /* Section heading */
+    .section-head {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
 
-.rating-item-label {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 13px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--white);
-}
+    /* Submit */
+    .submit-wrap {
+      margin-top: 40px;
+      text-align: center;
+    }
 
-/* Section heading */
-.section-head {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 10px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--border);
-}
+    .btn-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 16px 48px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.25s ease, color 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
 
-/* Submit */
-.submit-wrap {
-  margin-top: 40px;
-  text-align: center;
-}
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
 
-.btn-submit {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  background: transparent;
-  border: 1px solid var(--gold);
-  color: var(--gold);
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 13px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  padding: 16px 48px;
-  cursor: pointer;
-  border-radius: 2px;
-  transition: background 0.25s ease, color 0.25s ease;
-  position: relative;
-  overflow: hidden;
-}
+    .btn-submit:hover::before { transform: scaleX(1); }
+    .btn-submit:hover { color: var(--navy); }
 
-.btn-submit::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--gold);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
-}
+    .btn-submit span { position: relative; z-index: 1; }
 
-.btn-submit:hover::before { transform: scaleX(1); }
-.btn-submit:hover { color: var(--navy); }
+    .btn-arrow {
+      position: relative;
+      z-index: 1;
+      transition: transform 0.25s ease;
+    }
+    .btn-submit:hover .btn-arrow { transform: translateX(4px); }
 
-.btn-submit span { position: relative; z-index: 1; }
+    /* Thank you state */
+    .thankyou {
+      display: none;
+      text-align: center;
+      padding: 60px 20px;
+      animation: fadeUp 0.6s ease both;
+    }
 
-.btn-arrow {
-  position: relative;
-  z-index: 1;
-  transition: transform 0.25s ease;
-}
-.btn-submit:hover .btn-arrow { transform: translateX(4px); }
+    .thankyou.show { display: block; }
+    .form-inner.hide { display: none; }
 
-/* Thank you state */
-.thankyou {
-  display: none;
-  text-align: center;
-  padding: 60px 20px;
-  animation: fadeUp 0.6s ease both;
-}
+    .ty-icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 24px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-.thankyou.show { display: block; }
-.form-inner.hide { display: none; }
+    .ty-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 2;
+    }
 
-.ty-icon {
-  width: 56px;
-  height: 56px;
-  margin: 0 auto 24px;
-  border: 1px solid var(--gold);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    .ty-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 300;
+      margin-bottom: 12px;
+      color: var(--white);
+    }
 
-.ty-icon svg {
-  width: 24px;
-  height: 24px;
-  stroke: var(--gold);
-  fill: none;
-  stroke-width: 2;
-}
+    .ty-sub {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
 
-.ty-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 32px;
-  font-weight: 300;
-  margin-bottom: 12px;
-  color: var(--white);
-}
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 48px;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(138,149,168,0.4);
+      animation: fadeUp 0.8s ease 0.4s both;
+    }
 
-.ty-sub {
-  font-size: 14px;
-  color: var(--muted);
-  line-height: 1.7;
-}
-
-/* Footer */
-.footer {
-  text-align: center;
-  margin-top: 48px;
-  font-size: 11px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: rgba(138,149,168,0.4);
-  animation: fadeUp 0.8s ease 0.4s both;
-}
-
-/* Animations */
-@keyframes fadeDown {
-  from { opacity: 0; transform: translateY(-20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-```
-
+    /* Animations */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
@@ -441,90 +437,87 @@ textarea {
   <div class="form-card">
     <div class="form-inner" id="formInner">
 
-```
-  <p class="section-head">Suite Information</p>
+      <p class="section-head">Suite Information</p>
 
-  <div class="field-group">
-    <label class="field-label" for="suite">
-      Suite Number <span class="required-mark">*</span>
-    </label>
-    <input type="text" id="suite" placeholder="e.g. 201" autocomplete="off" />
-  </div>
-
-  <div class="divider">
-    <div class="divider-line"></div>
-    <div class="divider-dot"></div>
-    <div class="divider-line"></div>
-  </div>
-
-  <p class="section-head">Rate Your Experience</p>
-
-  <div class="ratings-block">
-    <div class="rating-item">
-      <span class="rating-item-label">Overall Experience</span>
-      <div class="stars" id="stars-overall" data-key="overall">
-        <div class="star" data-val="1"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-        <div class="star" data-val="2"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-        <div class="star" data-val="3"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-        <div class="star" data-val="4"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-        <div class="star" data-val="5"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+      <div class="field-group">
+        <label class="field-label" for="suite">
+          Suite Number <span class="required-mark">*</span>
+        </label>
+        <input type="text" id="suite" placeholder="e.g. 201" autocomplete="off" />
       </div>
-    </div>
-    <div class="rating-item">
-      <span class="rating-item-label">Host &amp; Service</span>
-      <div class="stars" id="stars-service" data-key="service">
-        <div class="star" data-val="1"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-        <div class="star" data-val="2"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-        <div class="star" data-val="3"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-        <div class="star" data-val="4"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-        <div class="star" data-val="5"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-dot"></div>
+        <div class="divider-line"></div>
       </div>
+
+      <p class="section-head">Rate Your Experience</p>
+
+      <div class="ratings-block">
+        <div class="rating-item">
+          <span class="rating-item-label">Overall Experience</span>
+          <div class="stars" id="stars-overall" data-key="overall">
+            <div class="star" data-val="1"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div class="star" data-val="2"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div class="star" data-val="3"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div class="star" data-val="4"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div class="star" data-val="5"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          </div>
+        </div>
+        <div class="rating-item">
+          <span class="rating-item-label">Host &amp; Service</span>
+          <div class="stars" id="stars-service" data-key="service">
+            <div class="star" data-val="1"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div class="star" data-val="2"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div class="star" data-val="3"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div class="star" data-val="4"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div class="star" data-val="5"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-dot"></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <p class="section-head">Your Feedback</p>
+
+      <div class="field-group">
+        <label class="field-label" for="standout">
+          Did anyone make your experience more enjoyable? <span class="required-mark">*</span>
+        </label>
+        <textarea id="standout" placeholder="Share a name or a moment that stood out…"></textarea>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="fb">
+          Food &amp; Beverage Highlights
+        </label>
+        <textarea id="fb" placeholder="Any dishes, drinks, or selections you'd recommend…"></textarea>
+      </div>
+
+      <div class="submit-wrap">
+        <button class="btn-submit" id="submitBtn" onclick="handleSubmit()">
+          <span>Submit Feedback</span>
+          <svg class="btn-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+
     </div>
-  </div>
 
-  <div class="divider">
-    <div class="divider-line"></div>
-    <div class="divider-dot"></div>
-    <div class="divider-line"></div>
-  </div>
-
-  <p class="section-head">Your Feedback</p>
-
-  <div class="field-group">
-    <label class="field-label" for="standout">
-      Did anyone make your experience more enjoyable? <span class="required-mark">*</span>
-    </label>
-    <textarea id="standout" placeholder="Share a name or a moment that stood out…"></textarea>
-  </div>
-
-  <div class="field-group">
-    <label class="field-label" for="fb">
-      Food &amp; Beverage Highlights
-    </label>
-    <textarea id="fb" placeholder="Any dishes, drinks, or selections you'd recommend…"></textarea>
-  </div>
-
-  <div class="submit-wrap">
-    <button class="btn-submit" id="submitBtn" onclick="handleSubmit()">
-      <span>Submit Feedback</span>
-      <svg class="btn-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-    </button>
-  </div>
-
-</div>
-
-<!-- Thank you -->
-<div class="thankyou" id="thankyou">
-  <div class="ty-icon">
-    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="20 6 9 17 4 12"/>
-    </svg>
-  </div>
-  <p class="ty-title">Thank You</p>
-  <p class="ty-sub">Your feedback has been received.<br>We look forward to welcoming you back.</p>
-</div>
-```
-
+    <!-- Thank you -->
+    <div class="thankyou" id="thankyou">
+      <div class="ty-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <p class="ty-title">Thank You</p>
+      <p class="ty-sub">Your feedback has been received.<br>We look forward to welcoming you back.</p>
+    </div>
   </div>
 
   <p class="footer">Rogers Centre &nbsp;·&nbsp; Premium Suites Experience</p>
@@ -596,6 +589,5 @@ textarea {
     });
   }
 </script>
-
 </body>
 </html>
