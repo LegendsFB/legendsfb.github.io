@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Ask — Legends Training HQ</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0A0A0A;
+      --surface: #141414;
+      --surface2: #1C1C1C;
+      --border: #262626;
+      --accent: #C8960C;
+      --accent-dim: #8a6508;
+      --text: #E2E2E2;
+      --muted: #666;
+      --muted2: #444;
+      --user-bubble: #1a1a2e;
+      --ai-bubble: #141414;
+      --error: #7a2020;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── LAYOUT ── */
+    #app {
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* ── HEADER ── */
+    header {
+      flex-shrink: 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 16px 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      color: var(--accent);
+      font-size: 18px;
+      line-height: 1;
+      padding: 4px 6px 4px 0;
+      flex-shrink: 0;
+    }
+
+    .header-text h1 {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      color: var(--text);
+    }
+
+    .header-text p {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 1px;
+      letter-spacing: 0.02em;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #3a3;
+      margin-left: auto;
+      flex-shrink: 0;
+      box-shadow: 0 0 6px #3a3a;
+    }
+
+    /* ── QUICK PROMPTS ── */
+    #quick-prompts {
+      flex-shrink: 0;
+      padding: 10px 12px 8px;
+      display: flex;
+      gap: 7px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      border-bottom: 1px solid var(--border);
+    }
+    #quick-prompts::-webkit-scrollbar { display: none; }
+
+    .qp-btn {
+      flex-shrink: 0;
+      padding: 6px 12px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--text);
+      font-size: 12px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: border-color 0.15s, color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .qp-btn:active { border-color: var(--accent); color: var(--accent); }
+
+    /* ── MESSAGES ── */
+    #messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .msg {
+      display: flex;
+      flex-direction: column;
+      max-width: 88%;
+      animation: fadeUp 0.2s ease;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .msg.user { align-self: flex-end; align-items: flex-end; }
+    .msg.ai   { align-self: flex-start; align-items: flex-start; }
+
+    .bubble {
+      padding: 10px 14px;
+      border-radius: 16px;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .msg.user .bubble {
+      background: var(--user-bubble);
+      border: 1px solid #2a2a4a;
+      border-bottom-right-radius: 4px;
+      color: #dde;
+    }
+
+    .msg.ai .bubble {
+      background: var(--ai-bubble);
+      border: 1px solid var(--border);
+      border-bottom-left-radius: 4px;
+      color: var(--text);
+    }
+
+    .msg.ai .bubble b, .msg.ai .bubble strong { color: var(--accent); font-weight: 600; }
+    .msg.ai .bubble em { color: #aaa; font-style: normal; }
+
+    .bubble ul, .bubble ol {
+      padding-left: 18px;
+      margin: 6px 0;
+    }
+    .bubble li { margin-bottom: 4px; }
+
+    .bubble p + p { margin-top: 8px; }
+
+    .sender-label {
+      font-size: 10px;
+      color: var(--muted2);
+      margin-bottom: 4px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0 4px;
+    }
+
+    /* ── TYPING INDICATOR ── */
+    .typing-bubble {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 12px 16px;
+    }
+    .typing-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--muted);
+      animation: bounce 1.2s infinite;
+    }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-5px); }
+    }
+
+    /* ── INPUT ── */
+    #input-area {
+      flex-shrink: 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 10px 12px;
+      padding-bottom: max(10px, env(safe-area-inset-bottom));
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+    }
+
+    #user-input {
+      flex: 1;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.4;
+      padding: 10px 14px;
+      resize: none;
+      outline: none;
+      max-height: 120px;
+      overflow-y: auto;
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+    #user-input:focus { border-color: var(--accent-dim); }
+    #user-input::placeholder { color: var(--muted2); }
+
+    #send-btn {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      background: var(--accent);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    #send-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    #send-btn svg { width: 18px; height: 18px; fill: #000; }
+
+    /* ── EMPTY STATE ── */
+    #empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      gap: 8px;
+      padding: 40px 24px;
+      text-align: center;
+    }
+    #empty-state .icon { font-size: 36px; margin-bottom: 4px; }
+    #empty-state h2 { font-size: 17px; font-weight: 600; color: var(--text); }
+    #empty-state p { font-size: 13px; color: var(--muted); line-height: 1.5; max-width: 280px; }
+
+    /* ── DISCLAIMER ── */
+    #disclaimer {
+      text-align: center;
+      font-size: 10px;
+      color: var(--muted2);
+      padding: 6px 12px 0;
+      letter-spacing: 0.02em;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <a href="https://legendsfb.github.io" class="back-btn">←</a>
+    <div class="header-text">
+      <h1>Ask the Bar</h1>
+      <p>Wine · Spirits · Cocktails · Upsell</p>
+    </div>
+    <div class="status-dot"></div>
+  </header>
+
+  <div id="quick-prompts">
+    <button class="qp-btn" onclick="quickAsk('What\'s the difference between our rail and premium rail vodka?')">Rail vs Premium</button>
+    <button class="qp-btn" onclick="quickAsk('A guest says they want something smooth and not too sweet. What do I recommend?')">Guest says smooth</button>
+    <button class="qp-btn" onclick="quickAsk('What\'s in the Banana Rum Old Fashioned and how do I describe it to a guest?')">Banana OF build</button>
+    <button class="qp-btn" onclick="quickAsk('Guest asks for bourbon. What do I say?')">No bourbon script</button>
+    <button class="qp-btn" onclick="quickAsk('What\'s our crispest white wine and what food does it go with?')">Crispest white</button>
+    <button class="qp-btn" onclick="quickAsk('Give me a 15-second upsell pitch for Zacapa rum')">Zacapa pitch</button>
+    <button class="qp-btn" onclick="quickAsk('What\'s the difference between the Strawberry Hibiscus Spritz and the Pineapple Coconut Sour?')">Spritz vs Sour</button>
+    <button class="qp-btn" onclick="quickAsk('What do I say if a guest asks what\'s the most popular cocktail?')">Most popular</button>
+  </div>
+
+  <div id="messages">
+    <div id="empty-state">
+      <div class="icon">🍸</div>
+      <h2>Ask anything</h2>
+      <p>Wine, spirits, cocktail builds, upsell lines — tap a quick question or type your own.</p>
+    </div>
+  </div>
+
+  <div id="disclaimer">AI can make mistakes. Confirm with your supervisor for allergen or policy questions.</div>
+
+  <div id="input-area">
+    <textarea id="user-input" placeholder="Ask about wine, spirits, cocktails..." rows="1"></textarea>
+    <button id="send-btn" onclick="sendMessage()" disabled>
+      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+
+</div>
+
+<script>
+// ── KNOWLEDGE BASE ──────────────────────────────────────────────
+const SYSTEM_PROMPT = `You are a concise, direct bar knowledge assistant for Legends Hospitality staff at Rogers Centre (Toronto Blue Jays). Staff are using this on their phones during pre-shift or between tables. Keep answers SHORT and ACTIONABLE — ideally 3-6 sentences or a short list. Never pad answers. 
+
+If a staff member needs a upsell line or guest script, give them the exact words to say.
+
+IMPORTANT RULES:
+- Bourbon is NOT available in Ontario. Always redirect to whisky/rye.
+- Use only the wines, spirits, and cocktails listed below. Do not invent items not on our list.
+- If you don't know something venue-specific, say "check with your supervisor."
+- Never give allergen guarantees — always say "confirm with your supervisor for allergy situations."
+- Be warm but efficient. Staff are busy.
+
+─────────────────────────────────────
+OUR COCKTAIL MENU (2026)
+─────────────────────────────────────
+
+1. BANANA RUM OLD FASHIONED
+   Base: Aged Rum 2oz + Crème de Banane 0.5oz + Demerara Syrup 0.25oz + Mole Bitters 2 dash
+   Method: Stir and strain | Glass: Double rocks | Ice: Large format cube
+   Garnish: Dehydrated banana chip, expressed orange peel
+   Profile: Tropical-sweet, spirit-forward, warm spice finish
+   Menu copy: "Aged rum and crème de banane stirred long and cold. Banana ester warmth with a dry, smoky finish."
+   Who it's for: Guests who want something serious, spirit-forward. Not a session drink.
+
+2. STRAWBERRY HIBISCUS TEA SPRITZ
+   Base: Hibiscus-black tea blend (house-made) + sparkling wine/soda
+   Profile: Floral, fruity, light, effervescent
+   Glass: Champagne flute
+   Who it's for: Guests who want something light, pretty, easy-drinking. Great opener.
+
+3. PINEAPPLE COCONUT SOUR
+   Profile: Tropical, citrus-forward, frothy
+   Format: Sour (shaken)
+   Who it's for: Guests who want something fun and tropical. More interesting than a basic margarita.
+
+4. STRAWBERRY COLD CREAM SODA
+   Profile: Sweet, creamy, nostalgic
+   Format: Built
+   Who it's for: Lighter drinkers, guests who want something approachable and unique.
+
+5. GREEN TEA PINEAPPLE HIGHBALL
+   Profile: Subtle, aromatic, effervescent
+   Format: Highball
+   Who it's for: Guests who want something lighter and less sweet. Refreshing and sessionable.
+
+6. KPMG&T (Gin & Tonic)
+   Base: Gin (Dillon's rail / Roku premium)
+   Profile: Classic, botanical, effervescent
+   Format: Highball
+   Who it's for: Classic G&T drinkers. Upgrade pitch: Roku for more aromatic/citrus-herb character.
+
+─────────────────────────────────────
+OUR WINE LIST (BTG)
+─────────────────────────────────────
+
+WHITES:
+- Esedra Pinot Grigio (Friuli, Italy): Light, crisp, mineral. Lemon and pear. Serve 6-8°C. Best for seafood, salads, fried apps.
+- Villa Maria Sauvignon Blanc (Marlborough, NZ): Zesty, aromatic. Lime, grapefruit, tropical snap. Serve 6-8°C. Best for oysters, bright dishes.
+- 3XP Chardonnay (Niagara, Canada): Smooth but fresh. Apple, lemon, soft creamy finish. Serve 8-10°C. Best for chicken, salmon, creamy sauces.
+
+REDS:
+- Leyda Reserve Pinot Noir (Chile): Silky and easy. Red berries, touch of spice, not heavy. Serve 14-16°C. Best for salmon, duck, guests who "don't like big reds."
+- Pago Aylés "Unexpected" Garnacha (Spain): Juicy and smooth. Ripe red fruit, warm spice note. Serve 16-18°C. Best for pizza, burgers, group tables.
+- Don David Reserve Cabernet Sauvignon (Argentina): Bold and classic. Dark fruit, touch of oak, firm dry finish. Serve 17-18°C. Best for steak, lamb, heavier mains.
+
+QUICK TRAINING ANSWERS:
+- Lightest red → Leyda Pinot Noir
+- Boldest red → Don David Cabernet
+- Crispest white → Villa Maria Sauvignon Blanc
+- Smoothest white → 3XP Chardonnay
+
+─────────────────────────────────────
+OUR SPIRITS (RAIL / PREMIUM RAIL)
+─────────────────────────────────────
+
+| Spirit  | Rail            | Premium Rail      | Upgrade pitch                                         |
+|---------|-----------------|-------------------|-------------------------------------------------------|
+| Vodka   | Ketel One       | Grey Goose        | "Ketel is crisp; Goose is cleaner and softer finish"  |
+| Gin     | Dillon's        | Roku              | "Dillon's is classic; Roku is more aromatic/citrus"   |
+| Tequila | 1800            | Casamigos Blanco  | "1800 is classic agave; Casamigos is rounder"         |
+| Rum     | Captain Morgan  | Ron Zacapa 23     | "Captain is straightforward; Zacapa is rich caramel/vanilla" |
+| Whisky  | Alberta Premium 9yr | Glenlivet 12  | "Alberta is spicy rye; Glenlivet is softer, honey/fruit" |
+
+BOURBON NOTE: Not available in Ontario. Script: "We don't carry bourbon here. The closest we can do is whisky/rye — do you want more spicy or more round?"
+
+─────────────────────────────────────
+UPSELL FRAMEWORK
+─────────────────────────────────────
+
+Upsell by solving a preference problem, not pushing price.
+
+3 clean upgrade lines:
+1. "If you like that, the next step up has the same vibe but more depth."
+2. "With your [food], this one will taste smoother because it has more structure."
+3. "If it's a celebration, that bottle drinks more 'special' without being polarizing."
+
+2-question bottle sale: "Matching food or just drinking?" → "Fresh/crisp or rich/round?"
+
+─────────────────────────────────────
+GUEST LANGUAGE TRANSLATION
+─────────────────────────────────────
+
+"Too strong" → Longer build or more dilution. Ask: "Tall and refreshing, or short and bold?"
+"Too sweet" → Reduce syrup, more citrus/bitters, or switch spirit-forward
+"Too harsh" → More ice/dilution or cleaner spirit
+"I don't like pine" → They mean juniper-heavy gin. Offer Roku or steer to vodka.
+"Smooth" (wine) → Red: low tannin + soft acid. White: lower acid + some oak.
+"Is it sweet?" → "Do you mean fruity or actually sweet?" then steer accordingly.`;
+
+// ── STATE ──────────────────────────────────────────────────────
+let history = [];
+let isLoading = false;
+
+// ── DOM ────────────────────────────────────────────────────────
+const messagesEl = document.getElementById('messages');
+const inputEl    = document.getElementById('user-input');
+const sendBtn    = document.getElementById('send-btn');
+const emptyState = document.getElementById('empty-state');
+
+// Auto-resize textarea
+inputEl.addEventListener('input', () => {
+  inputEl.style.height = 'auto';
+  inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + 'px';
+  sendBtn.disabled = !inputEl.value.trim() || isLoading;
+});
+
+inputEl.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    if (!sendBtn.disabled) sendMessage();
+  }
+});
+
+// ── RENDER HELPERS ─────────────────────────────────────────────
+function appendMessage(role, text) {
+  if (emptyState.parentNode) emptyState.remove();
+
+  const msg = document.createElement('div');
+  msg.className = `msg ${role}`;
+
+  const label = document.createElement('div');
+  label.className = 'sender-label';
+  label.textContent = role === 'user' ? 'You' : 'Bar Assistant';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  bubble.innerHTML = formatText(text);
+
+  msg.appendChild(label);
+  msg.appendChild(bubble);
+  messagesEl.appendChild(msg);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+  return bubble;
+}
+
+function formatText(text) {
+  // Basic markdown-lite formatting
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>')
+    .replace(/^(\d+)\. (.+)$/gm, '<li>$2</li>')
+    .replace(/\n{2,}/g, '</p><p>')
+    .replace(/\n/g, '<br>')
+    .replace(/^(?!<)/, '<p>')
+    .replace(/(?<!>)$/, '</p>');
+}
+
+function showTyping() {
+  const msg = document.createElement('div');
+  msg.className = 'msg ai';
+  msg.id = 'typing-indicator';
+
+  const label = document.createElement('div');
+  label.className = 'sender-label';
+  label.textContent = 'Bar Assistant';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble typing-bubble';
+  bubble.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+
+  msg.appendChild(label);
+  msg.appendChild(bubble);
+  messagesEl.appendChild(msg);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function hideTyping() {
+  const el = document.getElementById('typing-indicator');
+  if (el) el.remove();
+}
+
+// ── SEND ───────────────────────────────────────────────────────
+async function sendMessage(overrideText) {
+  const text = overrideText || inputEl.value.trim();
+  if (!text || isLoading) return;
+
+  inputEl.value = '';
+  inputEl.style.height = 'auto';
+  sendBtn.disabled = true;
+  isLoading = true;
+
+  appendMessage('user', text);
+  history.push({ role: 'user', content: text });
+
+  showTyping();
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: history,
+      }),
+    });
+
+    const data = await response.json();
+    hideTyping();
+
+    if (data.error) throw new Error(data.error.message);
+
+    const reply = data.content?.map(b => b.text || '').join('') || 'Sorry, no response.';
+    history.push({ role: 'assistant', content: reply });
+    appendMessage('ai', reply);
+
+  } catch (err) {
+    hideTyping();
+    appendMessage('ai', `⚠ Something went wrong. Try again or check with your supervisor.\n\n_${err.message}_`);
+  }
+
+  isLoading = false;
+  sendBtn.disabled = !inputEl.value.trim();
+}
+
+function quickAsk(text) {
+  sendMessage(text);
+}
+</script>
+</body>
+</html>
